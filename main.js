@@ -22,10 +22,18 @@ form.addEventListener('submit', async function(event){
     }),
   });
 
-  const { image } = await response.json();
+ if ( response.ok ){ const { image } = await response.json();
   
   const result = document.querySelector('#result');
-  result.innerHTML = `<img src="${image}" width="512"/>`
+  result.innerHTML = `<img src="${image}" width="512"/>`;
+
+} else {
+  const err = await response.text();
+
+  alert(err);
+  console.error(err);
+}
+  
   hideSpinner();
 });
 

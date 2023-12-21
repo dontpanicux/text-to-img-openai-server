@@ -52,6 +52,8 @@ app.use(express.json());
 */
 app.post('/dream', async function(req, res){
     // we want to access the prompt, the text description that the user wants to generate
+try {    
+    
     const prompt = req.body.prompt;
 
     // call the openAi API & pass our prompt to the createImage() method
@@ -75,7 +77,6 @@ app.post('/dream', async function(req, res){
         size: '1024x1024',
     });
     
-    console.log(aiResponse.data)
     // when openAI is 'done' generating an image it will give us the response Object that contains the image URL
     /* v3 syntax --> const image = aiResponse.data.data[0].url;  */
     const image = aiResponse.data[0].url;
@@ -84,6 +85,12 @@ app.post('/dream', async function(req, res){
     // with the image URL available from the aiResponse above when need to send it back to the client as a response
     // this is done by calling the .send() on the res (aka, response) Object
     res.send({ image });
+
+    } catch (error){
+        // best practice is to log the error
+        console.error(error);
+        res.status(500).send(error?.error.message || `Something went wrong, it's probably Ai's fault.`);
+    }
 
     // the client or browser will recieve this image data as JSON
 });

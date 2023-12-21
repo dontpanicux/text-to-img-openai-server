@@ -6,7 +6,6 @@ form.addEventListener('submit', async function(event){
   // prevent page reload behavior on submit
   event.preventDefault();
   showSpinner();
-  // console.log('form has been submitted');
 
   // get the data from the form passing a new FormData Object our form
   const data = new FormData(form);

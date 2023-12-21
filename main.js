@@ -5,7 +5,8 @@ const form = document.querySelector('form');
 form.addEventListener('submit', async function(event){
   // prevent page reload behavior on submit
   event.preventDefault();
-  console.log('form has been submitted');
+  showSpinner();
+  // console.log('form has been submitted');
 
   // get the data from the form passing a new FormData Object our form
   const data = new FormData(form);
@@ -22,7 +23,20 @@ form.addEventListener('submit', async function(event){
   });
 
   const { image } = await response.json();
-
+  
   const result = document.querySelector('#result');
   result.innerHTML = `<img src="${image}" width="512"/>`
+  hideSpinner();
 });
+
+function showSpinner(){
+  const submitBtn = document.querySelector('button');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `Dreamin'... <span class="spinner"> 🧠 </span>`;
+}
+
+function hideSpinner(){
+  const submitBtn = document.querySelector('button');
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = `Dream`;
+}
